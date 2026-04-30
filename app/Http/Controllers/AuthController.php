@@ -387,4 +387,30 @@ class AuthController extends Controller
         // 5. Kembalikan user ke halaman verify-otp dengan pesan sukses
         return back()->with('success', 'A new code has been sent to your email!');
     }
+
+
+    // UPDATE CORE SECURITY (MEMBER LOGIN)
+    public function requestSecurityUpdate() 
+    {
+        // 1. Ambil data user yang sedang login saat ini
+        $user = Auth::user();
+
+        // 2. Generate 4 Digit OTP
+        $otp = rand(1000, 9999);
+
+        // 3. Simpan ke database password_reset_tokens
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $user->email],
+            ['token' => $otp, 'created_at' => Carbon::now()]
+        );
+
+        // 4. Kirim Email OTP
+        Mail::to($user->email)->send(new ResetPasswordOTP($otp));
+
+        // 5. Simpan session email agar dikenali di halaman verifikasi
+        session(['reset_email' => $user->email]);
+
+        // 6. Langsung arahkan ke halaman input OTP
+        return redirect()->route('verify.otp')->with('success', 'Kode keamanan telah dikirim ke email Anda.');
+    }
 }

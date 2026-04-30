@@ -125,7 +125,7 @@
                     >
                 </div>
 
-                <a href="{{ route('reset.password.request') }}" class="w-full inline-flex items-center justify-center mt-6 rounded-md border border-[#b98f38] py-3 text-xs tracking-[0.12em] uppercase text-[#d7a338] hover:bg-[#b98f38]/10">
+                <a href="{{ route('member.security.request') }}" class="w-full inline-flex items-center justify-center mt-6 rounded-md border border-[#b98f38] py-3 text-xs tracking-[0.12em] uppercase text-[#d7a338] hover:bg-[#b98f38]/10">
                     Update Core Security
                 </a>
             </div>
