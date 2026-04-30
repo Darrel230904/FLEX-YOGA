@@ -1,0 +1,665 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================================
+    Global Styles untuk Landing Page
+   ========================================= */
+    .landing-page {
+        max-width: 1020px;
+        position: relative;
+        padding-top: 24px;
+    }
+
+    .landing-page,
+    .landing-page * {
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .landing-page::before {
+        content: '';
+        position: absolute;
+        inset: -120px -80px auto;
+        height: 260px;
+        background: radial-gradient(circle at 20% 50%, rgba(88, 132, 200, 0.26), transparent 55%),
+                    radial-gradient(circle at 80% 40%, rgba(230, 179, 58, 0.2), transparent 52%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .landing-page > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .landing-page .landing-hero {
+        background: radial-gradient(125% 95% at 15% 10%, #355b95 0%, #173c72 38%, #0d2a52 72%, #445e87 100%);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 30px 60px rgba(5, 16, 37, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .landing-page .landing-section {
+        animation: landingFadeUp 0.65s ease both;
+    }
+
+    .landing-page .landing-about { animation-delay: 0.06s; }
+    .landing-page .landing-classes { animation-delay: 0.12s; }
+    .landing-page .landing-pricing { animation-delay: 0.18s; }
+    .landing-page .landing-trainers { animation-delay: 0.24s; }
+    .landing-page .landing-testimonial { animation-delay: 0.3s; }
+    .landing-page .landing-cta { animation-delay: 0.36s; }
+
+    .landing-page .landing-hero h1,
+    .landing-page .landing-cta p {
+        text-shadow: 0 0 18px rgba(243, 193, 67, 0.2);
+    }
+
+    .landing-page .hero-wordmark {
+        text-shadow: 0 0 26px rgba(255, 255, 255, 0.9), 0 0 55px rgba(171, 206, 255, 0.28);
+        letter-spacing: 0.09em;
+    }
+
+    .landing-page .section-kicker {
+        color: #8ea9d2;
+        font-weight: 500;
+    }
+
+    .landing-page .section-title {
+        font-weight: 600;
+        text-wrap: balance;
+    }
+
+    .landing-page .hero-photo,
+    .landing-page .about-photo,
+    .landing-page .map-photo,
+    .landing-page .trainer-photo {
+        filter: saturate(1.06) contrast(1.03);
+    }
+
+    .landing-page .hero-photo {
+        box-shadow: 0 24px 40px rgba(7, 22, 45, 0.42);
+    }
+
+    .landing-page .hero-stats {
+        backdrop-filter: blur(2px);
+    }
+
+    .landing-page .stat-item {
+        position: relative;
+    }
+
+    .landing-page .stat-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -6px;
+        width: 24px;
+        height: 2px;
+        background: linear-gradient(90deg, #e6b33a, transparent);
+        opacity: 0.7;
+    }
+
+    .landing-page .class-card,
+    .landing-page .schedule-card,
+    .landing-page .trainer-card,
+    .landing-page .price-card {
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+        transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+        border-color: rgba(225, 238, 255, 0.13);
+    }
+
+    .landing-page .glass-outline {
+        position: relative;
+    }
+
+    .landing-page .glass-outline::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .landing-page .class-card:hover,
+    .landing-page .schedule-card:hover,
+    .landing-page .trainer-card:hover,
+    .landing-page .price-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.35);
+        border-color: rgba(240, 198, 90, 0.42);
+    }
+
+    .landing-page .class-card {
+        background: linear-gradient(180deg, rgba(106, 128, 166, 0.95) 0%, rgba(54, 74, 112, 0.96) 100%);
+    }
+
+    .landing-page .schedule-card,
+    .landing-page .trainer-card,
+    .landing-page .quote-pill {
+        background: linear-gradient(180deg, rgba(18, 46, 87, 0.92) 0%, rgba(11, 33, 68, 0.92) 100%);
+    }
+
+    .landing-page .landing-about h2,
+    .landing-page .landing-classes h2,
+    .landing-page .landing-trainers h2 {
+        letter-spacing: 0.01em;
+    }
+
+    .landing-page .landing-pricing {
+        position: relative;
+        box-shadow: 0 18px 46px rgba(6, 20, 42, 0.4);
+    }
+
+    .landing-page .landing-pricing::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(8, 24, 49, 0.28) 0%, rgba(8, 24, 49, 0.56) 100%);
+        pointer-events: none;
+    }
+
+    .landing-page .landing-pricing > div {
+        position: relative;
+        z-index: 1;
+    }
+
+    .landing-page .price-card {
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .landing-page .price-card.is-featured {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 42px rgba(3, 12, 28, 0.5), 0 0 0 1px rgba(241, 192, 77, 0.3);
+    }
+
+    .landing-page .btn-gold {
+        background: linear-gradient(180deg, #efbf4f 0%, #cf9724 100%);
+        box-shadow: 0 8px 18px rgba(207, 151, 36, 0.35), inset 0 1px 0 rgba(255, 243, 210, 0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .landing-page .btn-gold:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
+        box-shadow: 0 10px 22px rgba(207, 151, 36, 0.45), inset 0 1px 0 rgba(255, 243, 210, 0.5);
+    }
+
+    .landing-page .btn-gold:active {
+        transform: translateY(0);
+    }
+
+    .landing-page .quote-pill {
+        border-radius: 999px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .landing-page .map-card {
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.26);
+    }
+
+    .landing-page .landing-cta {
+        background: radial-gradient(105% 125% at 0% 100%, #223a5f 0%, #4e6a93 45%, #6a82a8 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 18px 40px rgba(10, 24, 48, 0.35);
+    }
+
+    .landing-page .landing-footer {
+        background: linear-gradient(180deg, #0b2144 0%, #081a35 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    @keyframes landingFadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .landing-page {
+            max-width: 100%;
+            padding-top: 16px;
+        }
+
+        .landing-page .landing-hero {
+            border-radius: 24px;
+        }
+
+        .landing-page .hero-wordmark {
+            font-size: 92px;
+        }
+
+        .landing-page .stat-item::before {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .landing-page .landing-section,
+        .landing-page .class-card,
+        .landing-page .schedule-card,
+        .landing-page .trainer-card,
+        .landing-page .price-card {
+            animation: none;
+            transition: none;
+        }
+    }
+
+/* =========================================
+    Global Styles untuk member 
+   ========================================= */
+    .member-shell {
+        position: relative;
+        background:
+            radial-gradient(1200px 500px at 50% 55%, rgba(151, 172, 210, 0.45), transparent 58%),
+            radial-gradient(900px 520px at 10% -5%, rgba(49, 84, 145, 0.52), transparent 60%),
+            linear-gradient(180deg, #07224a 0%, #041a3d 38%, #021230 100%);
+    }
+
+    .member-overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+            radial-gradient(circle at 90% 10%, rgba(226, 179, 78, 0.1), transparent 25%),
+            radial-gradient(circle at 10% 90%, rgba(137, 163, 204, 0.2), transparent 30%);
+    }
+
+    .member-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        backdrop-filter: blur(7px);
+        background: rgba(2, 25, 58, 0.88);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .member-nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .member-dashboard-wrap {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .member-hero-rule {
+        width: 110px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, #c08b22 50%, transparent 100%);
+        opacity: 0.9;
+    }
+
+    .member-home-card {
+        background: linear-gradient(180deg, rgba(22, 53, 101, 0.8) 0%, rgba(13, 39, 80, 0.92) 100%);
+    }
+
+    .member-card {
+        background: linear-gradient(180deg, rgba(24, 56, 104, 0.62) 0%, rgba(16, 44, 89, 0.78) 100%);
+        border: 1px solid rgba(208, 166, 77, 0.55);
+        box-shadow: 0 24px 60px rgba(4, 12, 28, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .member-btn-gold {
+        background: linear-gradient(90deg, #b5872b 0%, #f0c759 48%, #b5872b 100%);
+        color: #0d1830;
+        border: 1px solid rgba(243, 212, 128, 0.7);
+        box-shadow: 0 12px 26px rgba(201, 150, 45, 0.24), inset 0 1px 0 rgba(255, 239, 199, 0.55);
+    }
+
+    .member-btn-gold:hover {
+        filter: brightness(1.04);
+    }
+
+    .member-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.55);
+        margin-bottom: 6px;
+    }
+
+    .member-field {
+        border: 1px solid rgba(185, 143, 56, 0.9);
+        background: rgba(7, 38, 80, 0.7);
+        border-radius: 10px;
+        padding: 11px 12px;
+        font-size: 15px;
+        min-height: 46px;
+    }
+
+    .member-input {
+        width: 100%;
+        border: 1px solid rgba(185, 143, 56, 0.9);
+        background: rgba(7, 38, 80, 0.7);
+        border-radius: 10px;
+        padding: 11px 12px;
+        font-size: 15px;
+        min-height: 46px;
+        color: #fff;
+        outline: none;
+    }
+
+    .member-input:focus {
+        border-color: rgba(233, 190, 101, 0.95);
+        box-shadow: 0 0 0 2px rgba(233, 190, 101, 0.15);
+    }
+
+    .member-booking-page {
+        padding-bottom: 24px;
+    }
+
+    .member-chip {
+        border: 1px solid rgba(185, 143, 56, 0.95);
+        color: #eef1f7;
+        background: rgba(7, 34, 72, 0.42);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .member-chip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        color: #d8b15c;
+        font-size: 12px;
+        line-height: 1;
+    }
+
+    .member-session-card {
+        background: linear-gradient(180deg, rgba(7, 36, 78, 0.94) 0%, rgba(13, 43, 86, 0.9) 100%);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .member-session-card:hover {
+        border-color: rgba(216, 177, 92, 0.72);
+    }
+
+    .member-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
+
+    .member-modal.hidden {
+        display: none;
+    }
+
+    .member-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(1, 8, 22, 0.72);
+        backdrop-filter: blur(5px);
+    }
+
+    .member-modal-panel {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 860px);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    .member-payment-panel {
+        width: min(100%, 540px);
+    }
+
+    .member-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 22px;
+        background: linear-gradient(180deg, #07224c 0%, #061b3b 100%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .member-confirm-card {
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .payment-option {
+        display: block;
+    }
+
+    .payment-option-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid #496083;
+        background: rgba(255, 255, 255, 0.72);
+        transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    .payment-option:has(input:checked) .payment-option-box {
+        border-color: #0b2a56;
+        background: rgba(255, 255, 255, 0.92);
+    }
+
+    .payment-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #0b2a56;
+        color: #fff;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .payment-radio {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 2px solid #334f77;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .payment-option:has(input:checked) .payment-radio {
+        border-color: #0b2a56;
+    }
+
+    .payment-option:has(input:checked) .payment-radio::after {
+        content: '';
+        position: absolute;
+        inset: 3px;
+        border-radius: inherit;
+        background: #0b2a56;
+    }
+
+    .member-details-panel {
+        width: min(100%, 640px);
+    }
+
+    .member-securing-panel {
+        width: min(100%, 640px);
+    }
+
+    .payment-details-body {
+        min-height: 360px;
+    }
+
+    .payment-detail-section {
+        color: #0f2a52;
+    }
+
+    .cc-card-preview {
+        background: linear-gradient(180deg, #07244f 0%, #071c3d 100%);
+        box-shadow: 0 20px 36px rgba(7, 26, 58, 0.35);
+    }
+
+    .payment-field-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #6e7f9b;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+
+    .payment-field {
+        width: 100%;
+        border-radius: 11px;
+        border: 1px solid #b39459;
+        background: #eceff4;
+        color: #0f2a52;
+        padding: 10px 12px;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .payment-confirm-btn {
+        width: 100%;
+        border-radius: 10px;
+        background: #08224c;
+        color: #fff;
+        border: 1px solid rgba(8, 34, 76, 0.85);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 13px 12px;
+    }
+
+    .payment-confirm-btn:hover {
+        background: #061b3b;
+    }
+
+    .qris-card {
+        width: min(100%, 300px);
+        border: 1px solid #4e6689;
+        background: #eef0f3;
+        box-shadow: 0 14px 30px rgba(5, 16, 37, 0.18);
+    }
+
+    .va-card {
+        background: #d2c8b8;
+    }
+
+    .secure-loader {
+        width: 54px;
+        height: 54px;
+        border-radius: 999px;
+        border: 6px solid #c6cfdd;
+        border-top-color: #061b3b;
+        animation: secureSpin 0.9s linear infinite;
+    }
+
+    @keyframes secureSpin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+/* =========================================
+    Global Styles untuk admin cms
+   ========================================= */
+
+   
+    .app-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Memaksa tinggi minimal selebar layar */
+    }
+
+    /* Bagian Atas (Navbar) */
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1e293b; /* Warna gelap elegan */
+        color: white;
+        height: 60px;
+        padding: 0 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 10;
+    }
+
+    
+    /* Bagian Tengah (Sidebar & Konten) */
+    .main-content-wrapper {
+        display: flex;      
+        flex: 1;            
+        align-items: stretch; 
+    }
+
+    /* 1. Sidebar Kiri */
+    .sidebar-container {
+        width: 250px;
+        background-color: #0f172a;
+        color: #94a3b8;
+    }
+
+    .sidebar-menu ul {
+        list-style: none;
+    }
+
+    .sidebar-menu ul li a {
+        display: block;
+        padding: 15px 20px;
+        color: #cbd5e1;
+        text-decoration: none;
+        border-bottom: 1px solid #1e293b;
+        transition: 0.2s;
+    }
+
+    .sidebar-menu ul li a:hover {
+        background-color: #334155;
+        color: white;
+        border-left: 4px solid #3b82f6; /* Aksen biru saat di-hover */
+    }
+
+    /* 2. Area Konten Dinamis */
+    .content-area {
+        flex: 1;            /* Mengambil SEMUA sisa ruang kosong di kanan */
+        padding: 30px;
+        background-color: #f1f5f9;
+    }
+
+    /* Desain untuk judul halaman */
+    .content-area h1 {
+        color: #334155;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
+    }
+
+    
+    /* Bagian Bawah (Footer) */
+    .footer-container {
+        background-color: #e2e8f0;
+        color: #475569;
+        text-align: center;
+        padding: 15px;
+        font-size: 14px;
+        border-top: 1px solid #cbd5e1;
+    }
