@@ -41,7 +41,7 @@
     </header>
 
     <main class="relative z-10 w-full px-2 pb-2 pt-2">
-        @if(session('success'))
+        @if(session('success') && !request()->routeIs('member.profile'))
             <div class="mb-5 rounded-xl border border-emerald-300/35 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">
                 {{ session('success') }}
             </div>

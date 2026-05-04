@@ -26,7 +26,13 @@ Route::middleware('guest')->group(function () {
     // --- REGISTRATION ---
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
-}); // <--- KURUNG PENUTUP GUEST DIPINDAHKAN KE SINI
+
+    // LOGIN WHATSAPP
+    Route::get('/login/whatsapp', [AuthController::class, 'showWaLogin'])->name('wa.login');
+    Route::post('/login/whatsapp', [AuthController::class, 'sendWaOtp'])->name('wa.send.otp');
+    Route::get('/login/whatsapp/verify', [AuthController::class, 'showWaVerifyOtp'])->name('wa.verify.otp');
+    Route::post('/login/whatsapp/verify', [AuthController::class, 'processWaVerifyOtp'])->name('wa.verify.otp.process');
+}); 
 
 // ==========================================
 // 3. GLOBAL AUTH ROUTES (BISA DIAKSES GUEST MAUPUN MEMBER)
@@ -70,19 +76,24 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // 6. MEMBER SECTION
 // ==========================================
 Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->group(function () {
-    // Halaman Dashboard Baru setelah Login
-    Route::get('/home', [MemberBookingController::class, 'dashboard'])->name('home'); 
     
-    // Halaman Booking
-    Route::get('/booking', [MemberBookingController::class, 'index'])->name('booking.index'); 
-    Route::post('/booking/{schedule}', [MemberBookingController::class, 'store'])->name('booking.store');
-    
-    // Halaman Riwayat Booking
-    Route::get('/my-bookings', [MemberBookingController::class, 'history'])->name('booking.history');
-    Route::post('/my-bookings/{booking}/cancel', [MemberBookingController::class, 'cancel'])->name('booking.cancel');
-    
-    // Halaman Profile & Security
+    // RUTE BEBAS (Boleh diakses meski profil belum lengkap)
+    Route::get('/home', [MemberBookingController::class, 'dashboard'])->name('home');
     Route::get('/profile', [MemberBookingController::class, 'profile'])->name('profile');
     Route::post('/profile', [MemberBookingController::class, 'updateProfile'])->name('profile.update'); 
+    
+    // PASTIKAN RUTE INI ADA DAN NAMANYA BENAR:
     Route::get('/security-update', [AuthController::class, 'requestSecurityUpdate'])->name('security.request');
+    
+    // RUTE PROTEKSI KETAT (Wajib lengkapi profil)
+    Route::middleware(['profile.completed'])->group(function () {
+        // Halaman Booking
+        Route::get('/booking', [MemberBookingController::class, 'index'])->name('booking.index');
+        Route::post('/booking/{schedule}', [MemberBookingController::class, 'store'])->name('booking.store');
+        
+        // Halaman Riwayat Booking
+        Route::get('/my-bookings', [MemberBookingController::class, 'history'])->name('booking.history');
+        Route::post('/my-bookings/{booking}/cancel', [MemberBookingController::class, 'cancel'])->name('booking.cancel');
+    });
+
 });

@@ -11,6 +11,29 @@
         <article class="member-card rounded-2xl p-6 md:p-8">
             <h2 class="uppercase text-white/60 text-xs tracking-[0.18em] mb-3">Profile Settings</h2>
 
+            <!-- Banner Peringatan Lengkapi Profil (Dari Middleware) -->
+            @if($errors->has('profile_incomplete'))
+                <div class="mb-5 rounded-xl border border-amber-400/50 bg-amber-400/10 px-4 py-3 flex items-start gap-3">
+                    <svg class="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <div>
+                        <h3 class="font-semibold text-amber-400 text-sm">Tindakan Diperlukan!</h3>
+                        <p class="text-[13px] text-amber-200/90 mt-0.5">
+                            {{ $errors->first('profile_incomplete') }}
+                        </p>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Success Message (Jika profil berhasil diupdate) -->
+            @if(session('success'))
+                <div class="mb-5 rounded-xl border border-emerald-400/50 bg-emerald-400/10 px-4 py-3 text-[13px] text-emerald-200">
+                    <span class="font-semibold">Berhasil!</span> {{ session('success') }}
+                </div>
+            @endif
+
+            <!-- Error Validasi Biasa -->
             @if($errors->has('name') || $errors->has('phone_number') || $errors->has('email'))
                 <div class="mb-4 rounded-xl border border-rose-300/35 bg-rose-400/10 px-4 py-3 text-sm text-rose-200">
                     <p class="font-semibold mb-1">Periksa data profile:</p>

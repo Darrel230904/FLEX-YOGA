@@ -413,4 +413,73 @@ class AuthController extends Controller
         // 6. Langsung arahkan ke halaman input OTP
         return redirect()->route('verify.otp')->with('success', 'Kode keamanan telah dikirim ke email Anda.');
     }
+
+    // ==========================================
+    // LOGIN DENGAN WHATSAPP
+    // ==========================================
+    
+    // 1. Tampilkan Halaman Input Nomor WA
+    public function showWaLogin() {
+        return view('auth.wa-login'); 
+    }
+
+    // 2. Proses Kirim OTP WA
+    public function sendWaOtp(Request $request) {
+        $request->validate([
+            'phone_number' => 'required|numeric|min:9'
+        ]);
+
+        $phone = $request->phone_number;
+        // Generate 5 Digit OTP (Sesuai dengan 5 garis di desain UI Anda)
+        $otp = rand(10000, 99999); 
+
+        // TODO: Integrasikan dengan API WhatsApp Gateway Anda di sini (misal: Fonnte, Wablas, atau Twilio)
+        // Http::post('URL_WA_GATEWAY', ['phone' => $phone, 'message' => "Kode OTP Flex Yoga Anda: $otp"]);
+        
+        // Untuk testing lokal, kita log saja OTP-nya:
+        \Illuminate\Support\Facades\Log::info("OTP WA untuk $phone adalah: $otp");
+
+        // Simpan ke session
+        session(['wa_phone' => $phone, 'wa_otp' => $otp]);
+
+        return redirect()->route('wa.verify.otp');
+    }
+
+    // 3. Tampilkan Halaman Input OTP
+    public function showWaVerifyOtp() {
+        if (!session('wa_phone')) return redirect()->route('wa.login');
+        return view('auth.wa-verify');
+    }
+
+    // 4. Proses Verifikasi & Login
+    public function processWaVerifyOtp(Request $request) {
+        // Asumsi input dari 5 kotak digabung menjadi 1 string bernama 'otp'
+        $request->validate(['otp_code' => 'required|numeric|digits:5']);
+
+        if ($request->otp_code != session('wa_otp')) {
+        return back()->withErrors(['otp' => 'Kode OTP salah atau tidak valid.']);
+        }
+
+        $phone = session('wa_phone');
+
+        // Cari user berdasarkan nomor HP, JIKA TIDAK ADA, otomatis buatkan user baru
+        $user = User::firstOrCreate(
+            ['phone_number' => $phone],
+            [
+                'name' => 'Username', // Nama sementara
+                'email' => $phone . '@wa.local', // Email sementara yang unik
+                'password' => \Illuminate\Support\Facades\Hash::make(\Illuminate\Support\Str::random(16)), // Password acak yang tidak akan dipakai
+                'role' => 'member'
+            ]
+        );
+
+        // Lakukan Login
+        Auth::login($user);
+        
+        // Bersihkan session OTP
+        session()->forget(['wa_phone', 'wa_otp']);
+
+        // Arahkan ke rute utama member (Home/Dashboard)
+        return redirect()->route('member.home');
+    }
 }
