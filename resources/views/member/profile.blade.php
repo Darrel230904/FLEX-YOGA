@@ -7,7 +7,7 @@
         <h1 class="font-[Cormorant_Garamond] text-6xl text-[#d7a338] leading-none">Your Profile</h1>
     </section>
 
-    <section class="grid lg:grid-cols-[2fr_1fr] gap-6">
+    <section class="w-full max-w-[1200px] mx-auto">
         <article class="member-card rounded-2xl p-6 md:p-8">
             <h2 class="uppercase text-white/60 text-xs tracking-[0.18em] mb-3">Profile Settings</h2>
 
@@ -104,54 +104,16 @@
                     <span class="member-btn-gold px-7 py-2 rounded-full text-[11px] uppercase tracking-[0.12em]">Verified</span>
                 </div>
 
-                <div class="md:col-span-2 flex justify-end mt-1">
-                    <button type="submit" class="rounded-md border border-[#b98f38] py-3 px-6 text-xs tracking-[0.12em] uppercase text-[#d7a338] hover:bg-[#b98f38]/10">
-                        Save Profile
+                <div class="md:col-span-2 flex justify-end gap-3 mt-1 flex-wrap">
+                    <button type="submit" class="member-btn-gold rounded-md py-3 px-6 text-xs tracking-[0.12em] uppercase">
+                        Save Configuration
                     </button>
+
+                    <a href="{{ route('member.security.request') }}" class="inline-flex items-center justify-center rounded-md border border-[#b98f38] py-3 px-6 text-xs tracking-[0.12em] uppercase text-[#d7a338] hover:bg-[#b98f38]/10">
+                        Update Core Security
+                    </a>
                 </div>
             </form>
-        </article>
-
-        <article class="member-card rounded-2xl p-6">
-            <h2 class="uppercase text-white/60 text-xs tracking-[0.18em] mb-3">Security Settings</h2>
-            <div class="border-t border-white/15 pt-5 space-y-3">
-                <div>
-                    <label class="member-label" for="current_password">Current Password</label>
-                    <input
-                        id="current_password"
-                        type="password"
-                        class="member-input"
-                        placeholder=""
-                        readonly
-                    >
-                </div>
-
-                <div>
-                    <label class="member-label" for="password">New Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        class="member-input"
-                        placeholder=""
-                        readonly
-                    >
-                </div>
-
-                <div>
-                    <label class="member-label" for="password_confirmation">Confirm New Password</label>
-                    <input
-                        id="password_confirmation"
-                        type="password"
-                        class="member-input"
-                        placeholder=""
-                        readonly
-                    >
-                </div>
-
-                <a href="{{ route('member.security.request') }}" class="w-full inline-flex items-center justify-center mt-6 rounded-md border border-[#b98f38] py-3 text-xs tracking-[0.12em] uppercase text-[#d7a338] hover:bg-[#b98f38]/10">
-                    Update Core Security
-                </a>
-            </div>
         </article>
     </section>
 @endsection
