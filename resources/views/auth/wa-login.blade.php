@@ -47,8 +47,8 @@
         </div>
 
         <div class="w-full md:w-[45%] bg-[#0A1628]/40 backdrop-blur-md p-10 flex flex-col justify-center items-center text-center">
-            <h2 class="text-4xl font-[Cormorant_Garamond] font-bold text-white mb-2 leading-tight">Don't Have</h2>
-            <h2 class="text-4xl font-[Cormorant_Garamond] font-bold text-white mb-6 leading-tight">An ACCOUNT</h2>
+            <h2 class="text-4xl font-cormorant font-bold text-white mb-2 leading-tight">Don't Have</h2>
+            <h2 class="text-4xl font-cormorant font-bold text-white mb-6 leading-tight">An ACCOUNT</h2>
             <p class="text-gray-300 mb-8 text-sm">Create an Account</p>
             <a href="{{ route('register') }}" class="border border-white text-white font-normal py-2 px-10 rounded-full hover:bg-white hover:text-[#0A1628] transition-all text-sm">
                 Sign Up
