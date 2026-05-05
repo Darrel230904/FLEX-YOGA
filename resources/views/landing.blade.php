@@ -151,27 +151,63 @@
                 
                 <!-- START: Carousel Track (Berada di lapisan paling dasar / z-0) -->
                 <div id="image-carousel" class="absolute inset-0 flex transition-transform duration-700 ease-in-out z-0">
-                    <!-- Slide 1 -->
-                    <div class="min-w-full h-full">
-                        <img src="{{ asset('images/bg-pricing.jpeg') }}" alt="Gallery 1" class="w-full h-full object-cover">
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="min-w-full h-full">
-                        <img src="{{ asset('images/bg-lp-1.jpeg') }}" alt="Gallery 2" class="w-full h-full object-cover">
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="min-w-full h-full">
-                        <img src="{{ asset('images/bg-lp-2.jpeg') }}" alt="Gallery 3" class="w-full h-full object-cover">
-                    </div>
-                    <!-- Slide 4 -->
-                    <div class="min-w-full h-full">
-                        <img src="{{ asset('images/instructor-1.jpeg') }}" alt="Gallery 4" class="w-full h-full object-cover">
-                    </div>
+                    @php
+                        $carouselSlides = [
+                            [
+                                'image' => 'images/vinyasa flow - crsl.jpeg',
+                                'tag' => 'DYNAMIC',
+                                'title' => 'Vinyasa Flow',
+                                'description' => 'A Dynamic Flow-Based Class That Synchronizes Breath With Movement, Guiding You Through A Series Of Continuous Poses To Build Strength, Improve Flexibility, And Enhance Focus. This Session Helps Create A Balanced Connection Between Body And Mind While Keeping Your Energy Flowing Throughout The Practice.',
+                                'price' => 'RP150.000',
+                            ],
+                            [
+                                'image' => 'images/Power Yoga - crsl.jpeg',
+                                'tag' => 'STRENGTH',
+                                'title' => 'Power Yoga',
+                                'description' => 'A high-intensity yoga session focused on building strength, endurance, and control through powerful, continuous movements. Power Yoga combines dynamic sequences with breathwork to elevate your energy, improve flexibility, and challenge both body and mind.',
+                                'price' => 'RP170.000',
+                            ],
+                            [
+                                'image' => 'images/Hatha Yoga - crsl.jpeg',
+                                'tag' => 'TRADITIONAL',
+                                'title' => 'Hatha Yoga',
+                                'description' => 'A traditional and balanced yoga practice focused on foundational postures, controlled breathing, and proper alignment. Hatha Yoga helps improve flexibility, build strength, and create a calm connection between body and mind, making it suitable for all levels, especially beginners.',
+                                'price' => 'RP150.000',
+                            ],
+                            [
+                                'image' => 'images/yin Yoga - crsl.jpeg',
+                                'tag' => 'THERAPEUTIC',
+                                'title' => 'Yin Yoga',
+                                'description' => 'A slow and therapeutic yoga practice focused on deep stretching and long-held poses to release tension and improve flexibility. Yin Yoga encourages mindfulness and relaxation, helping to restore balance in both body and mind while promoting inner calm.',
+                                'price' => 'RP150.000',
+                            ],
+                        ];
+                    @endphp
+
+                    @foreach($carouselSlides as $slideIndex => $slide)
+                        <div class="min-w-full h-full relative">
+                            <img src="{{ asset($slide['image']) }}" alt="Gallery {{ $slideIndex + 1 }}" class="absolute inset-0 w-full h-full object-cover">
+
+                            <!-- Lapisan gelap untuk readability (di atas gambar, di bawah teks) -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#0A1628]/85 via-[#0A1628]/55 to-transparent"></div>
+
+                            <!-- Teks di atas lapisan gelap -->
+                            <div class="relative z-10 h-full flex items-center">
+                                <div class="pl-14 pr-7 md:pl-20 md:pr-12 max-w-[740px]">
+                                    <p class="text-[10px] md:text-[11px] uppercase tracking-[0.24em] text-white/75" style="font-family: 'Poppins', sans-serif;">{{ $slide['tag'] }}</p>
+                                    <h3 class="mt-3 text-[#F2B632] text-[36px] md:text-[52px] leading-[1.02] font-normal" style="font-family: 'Lustria', serif;">{{ $slide['title'] }}</h3>
+                                    <p class="mt-4 text-white/92 text-[12px] md:text-[14px] leading-[1.75]" style="font-family: 'Poppins', sans-serif;">
+                                        {{ $slide['description'] }}
+                                    </p>
+                                    <p class="mt-5 text-[#F2B632] text-[14px] md:text-[16px] font-semibold" style="font-family: 'Poppins', sans-serif;">
+                                        {{ $slide['price'] }} <span class="text-[#F2B632]/90 font-normal text-[12px] md:text-[14px]">/ session</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
                 <!-- END: Carousel Track -->
-
-                <!-- Overlay Gelap (Berada di atas carousel / z-10) -->
-                <div class="absolute inset-0 bg-[#0A1628]/20 z-10 pointer-events-none"></div>
 
                 <!-- Ornamen Bintang -->
                 <div class="relative z-30 px-6 md:px-10 pt-8 pb-8 pointer-events-none">
