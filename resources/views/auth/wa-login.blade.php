@@ -27,7 +27,7 @@
                         <!-- Phone Input -->
                         <input type="text" name="phone_number" required value="{{ old('phone_number') }}"
                             class="w-full bg-white text-black px-4 py-2.5 focus:outline-none placeholder-gray-400" 
-                            placeholder="8123456789">
+                            placeholder="08123456789">
                     </div>
                 </div>
 
