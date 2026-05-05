@@ -146,84 +146,64 @@
 
         <section id="pricing" class="max-w-[1200px] mx-auto px-6 md:px-10 mt-28">
 
-            <div class="relative rounded-[28px] overflow-hidden border border-white/35 shadow-[0_0_38px_rgba(255,255,255,0.62)] bg-[#e6e4df]" style="background-image: url('{{ asset('images/bg-pricing.jpeg') }}'); background-size: cover; background-position: center;">
-                <div class="absolute inset-0 bg-[#0A1628]/20"></div>
-                <div class="absolute inset-0 bg-white/50 backdrop-blur-[2px]"></div>
-
-                <div class="relative px-6 md:px-10 pt-5 pb-8">
-                    
-                    <div class="relative z-30 flex justify-center mb-12 text-[#F2B632] text-2xl tracking-widest">
-                        ★ ★ ✿ ★ ★
+            <!-- Container dengan ukuran dan efek shadow/glow asli Anda -->
+            <div class="relative min-h-[200px] md:min-h-[450px] rounded-[28px] overflow-hidden border border-white/35 shadow-[0_0_38px_rgba(255,255,255,0.62)] bg-[#e6e4df] group">
+                
+                <!-- START: Carousel Track (Berada di lapisan paling dasar / z-0) -->
+                <div id="image-carousel" class="absolute inset-0 flex transition-transform duration-700 ease-in-out z-0">
+                    <!-- Slide 1 -->
+                    <div class="min-w-full h-full">
+                        <img src="{{ asset('images/bg-pricing.jpeg') }}" alt="Gallery 1" class="w-full h-full object-cover">
                     </div>
-
-                    <div class="grid md:grid-cols-3 gap-5 items-end">
-                        @forelse($pricingPlans as $plan)
-                            @if($plan->is_featured)
-                                <div class="rounded-[22px] bg-[#0D2242]/95 backdrop-blur-md border-2 border-[#D0A545] p-6 text-white shadow-[0_0_24px_rgba(208,165,69,0.6)] md:-mt-10">
-                                    <p class="text-center text-[32px] text-[#F2B632] font-medium" style="font-family: 'Poppins', sans-serif;">{{ $plan->title }}</p>
-                                    <p class="text-center text-[32px] text-white font-medium mt-1 mb-3" style="font-family: 'Poppins', sans-serif;">{{ $plan->price_text }}</p>
-                                    <div class="border-b border-[#D0A545]/75 mb-3"></div>
-                                    <ul class="text-[20px] space-y-1.5 text-white/95 font-Regular" style="font-family: 'Poppins', sans-serif;">
-                                        @foreach(($plan->features ?? []) as $feature)
-                                            <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> {{ $feature }}</li>
-                                        @endforeach
-                                    </ul>
-                                    <button class="mt-3 w-full rounded-[4px] py-2.5 text-[16px] font-medium text-[#0A1628] bg-[radial-gradient(95%_145%_at_50%_10%,#f8cb5f_0%,#f4b942_46%,#c98d21_100%)] border border-[#F4B942] shadow-[inset_0_1px_0_rgba(255,241,198,0.45)]">{{ $plan->button_text }}</button>
-                                </div>
-                            @elseif($plan->session_text)
-                                <div class="rounded-[22px] bg-[#5B6C8A]/80 backdrop-blur-md border border-white/30 p-6 text-white shadow-[0_0_18px_rgba(255,255,255,0.22)]">
-                                    <div class="mt-1 mb-3 border-b border-[#D0A545]/75 pb-3">
-                                        <div class="grid grid-cols-[1.35fr_auto_0.95fr] items-center gap-4">
-                                            <div class="pr-2">
-                                                <p class="text-[20px] text-[#F2B632] font-normal" style="font-family: 'Poppins', sans-serif;">{{ $plan->title }}</p>
-                                                @if($plan->subtitle)
-                                                    <p class="text-[20px] text-[#F2B632] font-normal mt-1 whitespace-nowrap" style="font-family: 'Poppins', sans-serif;">{{ $plan->subtitle }}</p>
-                                                @endif
-                                            </div>
-                                            <div class="h-[72px] w-px bg-[#D0A545]/75"></div>
-                                            <div class="pl-2">
-                                                <p class="text-[20px] text-[#F2B632] font-normal leading-none whitespace-nowrap" style="font-family: 'Poppins', sans-serif;">{{ $plan->session_text }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="text-[16px] space-y-1.5 text-white/90" style="font-family: 'Poppins', sans-serif;">
-                                        @foreach(($plan->features ?? []) as $feature)
-                                            <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> {{ $feature }}</li>
-                                        @endforeach
-                                    </ul>
-                                    <button class="mt-3 w-full rounded-[4px] py-2.5 text-[16px] font-semibold text-[#0A1628] bg-[radial-gradient(95%_145%_at_50%_10%,#f8cb5f_0%,#f4b942_46%,#c98d21_100%)] border border-[#F4B942] shadow-[inset_0_1px_0_rgba(255,241,198,0.45)]">{{ $plan->button_text }}</button>
-                                </div>
-                            @else
-                                <div class="rounded-[22px] bg-[#5B6C8A]/80 backdrop-blur-md border border-white/30 p-6 text-white shadow-[0_0_18px_rgba(255,255,255,0.22)]">
-                                    <p class="text-[20px] text-[#F2B632] font-normal" style="font-family: 'Poppins', sans-serif;">{{ $plan->title }}</p>
-                                    @if($plan->subtitle)
-                                        <p class="text-[20px] text-[#F2B632] font-normal mt-1 mb-3" style="font-family: 'Poppins', sans-serif;">{{ $plan->subtitle }}</p>
-                                    @endif
-                                    <div class="border-b border-[#D0A545]/75 mb-3"></div>
-                                    <ul class="text-[16px] space-y-1.5 text-white/90" style="font-family: 'Poppins', sans-serif;">
-                                        @foreach(($plan->features ?? []) as $feature)
-                                            <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> {{ $feature }}</li>
-                                        @endforeach
-                                    </ul>
-                                    <button class="mt-3 w-full rounded-[4px] py-2.5 text-[16px] font-semibold text-[#0A1628] bg-[radial-gradient(95%_145%_at_50%_10%,#f8cb5f_0%,#f4b942_46%,#c98d21_100%)] border border-[#F4B942] shadow-[inset_0_1px_0_rgba(255,241,198,0.45)]">{{ $plan->button_text }}</button>
-                                </div>
-                            @endif
-                        @empty
-                            <div class="rounded-[22px] bg-[#5B6C8A]/80 backdrop-blur-md border border-white/30 p-6 text-white shadow-[0_0_18px_rgba(255,255,255,0.22)]">
-                                <p class="text-[18px] text-[#F2B632] font-normal" style="font-family: 'Poppins', sans-serif;">Basic</p>
-                                <p class="text-[20px] text-[#F2B632] font-normal mt-1 mb-3" style="font-family: 'Poppins', sans-serif;">3 Month</p>
-                                <div class="border-b border-[#D0A545]/75 mb-3"></div>
-                                <ul class="text-[16px] space-y-1.5 text-white/90" style="font-family: 'Poppins', sans-serif;">
-                                    <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> amazing yoga courses</li>
-                                    <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> access all courses</li>
-                                    <li class="flex items-center gap-2"><span class="text-[#F2B632]">✓</span> no regeneration fels</li>
-                                </ul>
-                                <button class="mt-3 w-full rounded-[4px] py-2.5 text-[16px] font-semibold text-[#0A1628] bg-[radial-gradient(95%_145%_at_50%_10%,#f8cb5f_0%,#f4b942_46%,#c98d21_100%)] border border-[#F4B942] shadow-[inset_0_1px_0_rgba(255,241,198,0.45)]">Book Now</button>
-                            </div>
-                        @endforelse
+                    <!-- Slide 2 -->
+                    <div class="min-w-full h-full">
+                        <img src="{{ asset('images/bg-lp-1.jpeg') }}" alt="Gallery 2" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="min-w-full h-full">
+                        <img src="{{ asset('images/bg-lp-2.jpeg') }}" alt="Gallery 3" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="min-w-full h-full">
+                        <img src="{{ asset('images/instructor-1.jpeg') }}" alt="Gallery 4" class="w-full h-full object-cover">
                     </div>
                 </div>
+                <!-- END: Carousel Track -->
+
+                <!-- Overlay Gelap (Berada di atas carousel / z-10) -->
+                <div class="absolute inset-0 bg-[#0A1628]/20 z-10 pointer-events-none"></div>
+
+                <!-- Ornamen Bintang -->
+                <div class="relative z-30 px-6 md:px-10 pt-8 pb-8 pointer-events-none">
+                    <div class="flex justify-center mb-12 text-[#F2B632] text-2xl tracking-widest">
+                        ★ ★ ✿ ★ ★
+                    </div>
+                </div>
+
+                <!-- Tombol Navigasi Kiri (Elegan: Tanpa background, panah lebih tipis & responsif) -->
+                <button id="prev-btn" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:-translate-x-2 z-30 cursor-pointer drop-shadow-xl" aria-label="Previous">
+                    <svg class="w-9 h-9 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Tombol Navigasi Kanan (Elegan: Tanpa background, panah lebih tipis & responsif) -->
+                <button id="next-btn" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:translate-x-2 z-30 cursor-pointer drop-shadow-xl" aria-label="Next">
+                    <svg class="w-9 h-9 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <!-- Indikator Garis Tipis (Z-30) -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+                    <button class="carousel-dot h-px w-7 md:w-10 rounded-full bg-white transition-colors duration-300 cursor-pointer"></button>
+                    <button class="carousel-dot h-px w-7 md:w-10 rounded-full bg-white/40 hover:bg-white/70 transition-colors duration-300 cursor-pointer"></button>
+                    <button class="carousel-dot h-px w-7 md:w-10 rounded-full bg-white/40 hover:bg-white/70 transition-colors duration-300 cursor-pointer"></button>
+                    <button class="carousel-dot h-px w-7 md:w-10 rounded-full bg-white/40 hover:bg-white/70 transition-colors duration-300 cursor-pointer"></button>
+                </div>
+
             </div>
+
         </section>
 
         <section class="max-w-[1200px] mx-auto px-6 md:px-10 mt-28">
@@ -377,3 +357,71 @@
 </div>
 
 @endsection
+
+@push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const carousel = document.getElementById('image-carousel');
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const dots = document.querySelectorAll('.carousel-dot');
+                
+                let currentIndex = 0;
+                const totalSlides = carousel ? carousel.children.length : dots.length;
+                if (!totalSlides) return;
+                let autoSlideInterval;
+
+                function updateCarousel() {
+                    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        if (index === currentIndex) {
+                            dot.classList.add('bg-white');
+                            dot.classList.remove('bg-white/40');
+                        } else {
+                            dot.classList.add('bg-white/40');
+                            dot.classList.remove('bg-white');
+                        }
+                    });
+                }
+
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    updateCarousel();
+                }
+
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                    updateCarousel();
+                }
+
+                nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    resetInterval();
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    resetInterval();
+                });
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        updateCarousel();
+                        resetInterval();
+                    });
+                });
+
+                function startAutoSlide() {
+                    autoSlideInterval = setInterval(nextSlide, 5000);
+                }
+
+                function resetInterval() {
+                    clearInterval(autoSlideInterval);
+                    startAutoSlide();
+                }
+
+                startAutoSlide();
+            });
+        </script>
+    @endpush
