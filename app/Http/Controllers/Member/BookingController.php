@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Schedule;
 use App\Models\Booking;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -48,9 +49,18 @@ class BookingController extends Controller
     // 2. Halaman Book A Class (Daftar Kelas)
     public function index()
     {
+        $today = now()->toDateString();
+        $nowTime = now()->toTimeString();
+
         $schedules = Schedule::with(['yogaClass', 'trainer'])
             ->withCount('bookings')
-            ->where('date', '>=', now()->toDateString())
+            ->where(function ($query) use ($today, $nowTime) {
+                $query->where('date', '>', $today)
+                    ->orWhere(function ($subQuery) use ($today, $nowTime) {
+                        $subQuery->where('date', $today)
+                            ->where('start_time', '>=', $nowTime);
+                    });
+            })
             ->orderBy('date')
             ->orderBy('start_time')
             ->get();
@@ -61,6 +71,11 @@ class BookingController extends Controller
     // 3. Proses Simpan Booking (Logika Anda yang sudah benar)
     public function store(Schedule $schedule)
     {
+        $scheduleStart = Carbon::parse($schedule->date . ' ' . $schedule->start_time);
+        if ($scheduleStart->isPast()) {
+            return redirect()->back()->with('error', 'Maaf, jadwal ini sudah lewat!');
+        }
+
         // Cek apakah kuota masih tersedia (Otomatisasi Slot)
         $currentBookings = $schedule->bookings()->count();
         

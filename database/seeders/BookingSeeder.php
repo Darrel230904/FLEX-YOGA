@@ -12,24 +12,45 @@ class BookingSeeder extends Seeder
 {
     public function run(): void
     {
-        $budi = User::where('email', 'budi@flexyoga.com')->firstOrFail();
-        $siti = User::where('email', 'siti@flexyoga.com')->firstOrFail();
-        $hathaSchedule = Schedule::where('class_id', 1)->firstOrFail();
+        $budi = User::where('email', 'budi@flexyoga.com')->first();
+        $siti = User::where('email', 'siti@flexyoga.com')->first();
 
-        // Member 1 (Budi) mem-booking jadwal pertama (Hatha Yoga)
-        Booking::create([
-            'user_id' => $budi->id,
-            'schedule_id' => $hathaSchedule->id,
-            'status' => 'active',
-            'booking_date' => Carbon::now(),
-        ]);
+        if (!$budi || !$siti) {
+            return;
+        }
 
-        // Member 2 (Siti) mem-booking jadwal pertama (Hatha Yoga)
-        Booking::create([
-            'user_id' => $siti->id,
-            'schedule_id' => $hathaSchedule->id,
-            'status' => 'active',
-            'booking_date' => Carbon::now(),
-        ]);
+        $hathaSchedule = Schedule::with('yogaClass')
+            ->whereHas('yogaClass', function ($query) {
+                $query->where('name', 'Hatha Yoga');
+            })
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->first();
+
+        if (!$hathaSchedule) {
+            return;
+        }
+
+        Booking::updateOrCreate(
+            [
+                'user_id' => $budi->id,
+                'schedule_id' => $hathaSchedule->id,
+            ],
+            [
+                'status' => 'active',
+                'booking_date' => Carbon::now(),
+            ]
+        );
+
+        Booking::updateOrCreate(
+            [
+                'user_id' => $siti->id,
+                'schedule_id' => $hathaSchedule->id,
+            ],
+            [
+                'status' => 'active',
+                'booking_date' => Carbon::now(),
+            ]
+        );
     }
 }

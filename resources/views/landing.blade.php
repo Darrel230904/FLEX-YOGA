@@ -104,43 +104,112 @@
         <section id="classes" class="max-w-[1200px] mx-auto px-6 md:px-10 mt-28">
             <div class="flex items-center justify-center gap-5">
                 <span class="h-px w-24 md:w-32 bg-white/45"></span>
-                <p class="text-center text-[12px] uppercase tracking-[0.12em] text-white/90" style="font-family: 'Poppins', sans-serif;">Explore Classes</p>
+                <p class="text-center text-[12px] uppercase tracking-[0.12em] text-white/90" style="font-family: 'Poppins', sans-serif;">Explore Schedule</p>
                 <span class="h-px w-24 md:w-32 bg-white/45"></span>
             </div>
 
-            <h2 class="text-center text-white text-[55px] md:text-[58px] leading-[1.05] mt-4 font-normal" style="font-family: 'Lustria', serif;">Curated For You</h2>
+            <h2 class="text-center text-white text-[55px] md:text-[58px] leading-[1.05] mt-4 font-normal" style="font-family: 'Lustria', serif;">Upcoming Sessions</h2>
             <p class="text-center text-[#808C9C] text-[14px] mt-4 max-w-[620px] mx-auto leading-[1.45]" style="font-family: 'Poppins', sans-serif;">
-                discover our signature practices, each designed to specifically target your physical and emotional needs.
+                Discover our signature practices, each designed to specifically target your physical and emotional needs.
             </p>
 
-            @php
-                $classTags = ['Dynamic', 'Traditional', 'Therapeutic', 'Strength'];
-                $classDurations = ['60min', '75min', '90min', '60min'];
-            @endphp
-
             <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($classes->take(4)->values() as $index => $class)
-                    <div class="rounded-[24px] bg-[#4B6180] border-2 border-white/55 p-6 shadow-[0_0_22px_rgba(210,228,252,0.62)] flex flex-col min-h-[270px]">
-                        <div>
-                            <p class="text-[12px] uppercase tracking-[0.04em] text-[#11284A]" style="font-family: 'Poppins', sans-serif;">{{ $classTags[$index] ?? 'Dynamic' }}</p>
-                            <h3 class="text-[#F2B632] text-[32px] leading-[1.12] mt-3 font-normal" style="font-family: 'Lustria', serif;">{{ $class->name }}</h3>
-                            <p class="text-white text-[14px] mt-4 leading-[1.35] max-w-[210px]" style="font-family: 'Poppins', sans-serif;">
-                                A focused session designed to improve {{ strtolower($class->name) }} through breath and movement.
-                            </p>
+                @foreach($schedules as $schedule)
+                    @php
+                        $className = $schedule->yogaClass->name ?? 'Yoga Session';
+                        $classNameLower = strtolower($className);
+                        $studioLabel = 'DYNAMIC STUDIO';
+
+                        if (str_contains($classNameLower, 'hatha')) {
+                            $studioLabel = 'TRADITIONAL STUDIO';
+                        } elseif (str_contains($classNameLower, 'yin')) {
+                            $studioLabel = 'THERAPEUTIC STUDIO';
+                        } elseif (str_contains($classNameLower, 'power')) {
+                            $studioLabel = 'STRENGTH STUDIO';
+                        }
+
+                        $coachName = $schedule->trainer->name ?? 'Coach';
+                        $bookedCount = (int) ($schedule->bookings_count ?? 0);
+                        $quota = max(1, (int) ($schedule->quota ?? 20));
+                        $occupancyPercent = min(100, (int) round(($bookedCount / $quota) * 100));
+
+                        $startTime = is_string($schedule->start_time) ? substr($schedule->start_time, 0, 5) : '';
+                        $endTime = is_string($schedule->end_time) ? substr($schedule->end_time, 0, 5) : '';
+                        $dateText = $schedule->date;
+                    @endphp
+
+                    <div class="rounded-[26px] overflow-hidden bg-[#0D274B] border border-[#8E6C26]/70 shadow-[0_0_22px_rgba(0,0,0,0.32)]">
+                        <div class="p-6">
+                            <p class="text-white text-[16px] md:text-[18px] uppercase tracking-[0.08em]" style="font-family: 'Lustria', serif;">{{ $className }}</p>
+
+                            <div class="mt-5 space-y-3 text-white/85 text-[11px] uppercase tracking-[0.14em]" style="font-family: 'Poppins', sans-serif;">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M4 20a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>COACH {{ strtoupper($coachName) }}</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M7 7h10M7 12h10M7 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                        <path d="M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/>
+                                    </svg>
+                                    <span>{{ $studioLabel }}</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mt-auto pt-5 border-t-2 border-white/80 flex justify-between items-center">
-                            <span class="text-[#F2B632] text-[16px] font-semibold" style="font-family: 'Poppins', sans-serif;">{{ $classDurations[$index] ?? '60min' }}</span>
-                            <a href="#pricing" class="w-8 h-8 rounded-full bg-[#F2B632] text-[#0D2443] flex items-center justify-center">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 12h14m0 0-5-5m5 5-5 5"></path></svg>
-                            </a>
+                        <div class="border-t border-[#8E6C26]/45"></div>
+
+                        <div class="p-6">
+                            <div class="grid gap-5 text-white/80" style="font-family: 'Poppins', sans-serif;">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" stroke-width="1.8"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] uppercase tracking-[0.12em] text-white/55 font-semibold">Time Window</p>
+                                        <p class="mt-1 text-[14px] font-semibold tracking-[0.04em]">{{ $startTime }} — {{ $endTime }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4">
+                                    <div class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M7 3v3M17 3v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                            <path d="M3.5 9h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                            <path d="M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] uppercase tracking-[0.12em] text-white/55 font-semibold">Date</p>
+                                        <p class="mt-1 text-[14px] font-semibold tracking-[0.04em]">{{ $dateText }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6">
+                                <p class="text-[#8E6C26] text-[12px] uppercase tracking-[0.12em]" style="font-family: 'Poppins', sans-serif;">
+                                    Sanctuary Occupancy
+                                </p>
+                                <p class="mt-1 text-[#F2B632] text-[18px] font-semibold tracking-[0.04em]" style="font-family: 'Poppins', sans-serif;">
+                                    {{ $bookedCount }} / {{ $quota }}
+                                </p>
+                                <div class="mt-3 h-[7px] w-full rounded-full bg-white/85 overflow-hidden">
+                                    <div class="h-full rounded-full bg-[#8E6C26]" style="width: {{ $occupancyPercent }}%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
 
             <div class="text-center mt-14">
-                <a href="#classes" class="inline-block text-white text-[16px] tracking-[0.08em] uppercase border-b border-[#8E6C26]/70 pb-1" style="font-family: 'Poppins', sans-serif;">View Full Schedule</a>
+                <a href="{{ route('member.booking.index') }}" class="inline-block text-white text-[16px] tracking-[0.08em] uppercase border-b border-[#8E6C26]/70 pb-1" style="font-family: 'Poppins', sans-serif;">View Full Schedule</a>
             </div>
         </section>
 

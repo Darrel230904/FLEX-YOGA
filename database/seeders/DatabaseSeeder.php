@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TrainerSeeder::class,
             YogaClassSeeder::class,
-            PricingPlanSeeder::class,
             ScheduleSeeder::class,
             BookingSeeder::class,
         ]);

@@ -32,17 +32,5 @@ class YogaClassSeeder extends Seeder
             'price' => 80000,
             'description' => 'Kelas yang lambat dengan fokus pada peregangan dan relaksasi otot.'
         ]);
-
-        YogaClass::create([
-            'name' => 'Ashtanga Yoga',
-            'price' => 110000,
-            'description' => 'Kelas yang mengikuti serangkaian postur yang tetap dengan fokus pada kekuatan dan fleksibilitas.'
-        ]);
-
-            YogaClass::create([
-                'name' => 'Restorative Yoga',
-                'price' => 90000,
-                'description' => 'Kelas yang menenangkan dengan penggunaan alat bantu untuk mendukung tubuh dalam postur yang nyaman.'
-            ]);
     }
 }

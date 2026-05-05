@@ -27,7 +27,7 @@ class TrainerSeeder extends Seeder
 
 
         Trainer::updateOrCreate(
-            ['name' => 'Nadine Chandrawinata'],
+            ['name' => 'Nadine Chandra'],
             [
                 'bio' => 'Instruktur Yin Yoga dengan fokus pada relaksasi dan fleksibilitas.',
                 'photo_url' => 'images/instructor-3.jpeg',
@@ -39,14 +39,6 @@ class TrainerSeeder extends Seeder
             [
                 'bio' => 'Ahli Ashtanga Yoga dengan pendekatan dinamis dan energik.',
                 'photo_url' => 'images/instructor-4.jpeg',
-            ]
-        );
-
-        Trainer::updateOrCreate(
-            ['name' => 'Dimas Anggara'],
-            [
-                'bio' => 'Guru Power Yoga dengan pengalaman mengajar di berbagai negara.',
-                'photo_url' => 'images/trainer-profiles.png',
             ]
         );
     }
